@@ -8,6 +8,9 @@ A comprehensive stock market analysis and AI-powered financial assistant tool th
 ## Sentiment analysis view
 ![Sentiment](images/sentiment.jpeg)
 
+## AI Chat
+![StoxChai AI Chat](images/ai-chat.png)
+
 ## AI analysis view
 ![Sentiment](images/ai-analysis.jpeg)
 
