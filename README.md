@@ -75,7 +75,6 @@ If you encounter issues with the Yahoo Finance API (e.g., "No price data found" 
 2. Use a different stock symbol
 3. Try a different time period or interval
 4. Check your internet connection
-   ```
 
 ### Torch Issues
 
