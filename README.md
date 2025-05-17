@@ -19,7 +19,7 @@ A comprehensive stock market analysis and AI-powered financial assistant tool th
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/StoxChai.git
+   git clone https://github.com/jaganthoutam/StoxChai.git
    cd StoxChai
    ```
 
@@ -65,24 +65,6 @@ If you encounter issues with the Yahoo Finance API (e.g., "No price data found" 
 2. Use a different stock symbol
 3. Try a different time period or interval
 4. Check your internet connection
-
-### Ollama Issues
-
-If you encounter issues with Ollama, try the following:
-
-1. Make sure Ollama is installed and running:
-   ```
-   ./check_ollama.py
-   ```
-
-2. Make sure the required models are installed:
-   ```
-   ./setup_ollama.py
-   ```
-
-3. Restart the Ollama server:
-   ```
-   ollama serve
    ```
 
 ### Torch Issues
