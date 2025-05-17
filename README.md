@@ -2,6 +2,16 @@
 
 A comprehensive stock market analysis and AI-powered financial assistant tool that combines data visualization, RAG (Retrieval-Augmented Generation), and AI analysis capabilities.
 
+## Dashboard view
+![DashBoard](images/dashboard.jpeg)
+
+## Sentiment analysis view
+![Sentiment](images/sentiment.jpeg)
+
+## AI analysis view
+![Sentiment](images/ai-analysis.jpeg)
+
+
 ## Features
 
 - **Dashboard**: Visualize stock data with interactive charts and performance metrics
