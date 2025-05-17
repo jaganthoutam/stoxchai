@@ -69,4 +69,6 @@ htmlcov/
 
 # Data directories
 vector_db/
-news_cache/ 
+news_cache/
+old-code/
+data/
