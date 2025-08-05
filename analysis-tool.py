@@ -299,12 +299,9 @@ def fetch_news(ticker, company_name, max_articles=5):
             
         search_query = query.replace(' ', '+')
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.556.124 Safari/637.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Connection': 'keep-alive',
-            'Upgrade-Insecure-Requests': '1',
-            'Cache-Control': 'max-age=0'
+            'Connection': 'keep-alive'
         }
         
         try:
@@ -1039,11 +1036,11 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.image("logo/StoxChaiLogo.png", width=80)
+        st.image("logo/StoxChaiLogo.png", width=100)
         st.title("StoxChai Tool")
         
         # Input for stock symbol
-        ticker_input = st.text_input("Enter Stock Symbol (e.g., HDFCBANK.NS, RELIANCE.NS):", value="HDFCBANK.NS")
+        ticker_input = st.text_input("Enter Stock Symbol (e.g., HDFCBANK.NS, RELIANCE.NS):", value="NAVA.NS")
         
         # Handle multiple tickers
         tickers = [ticker.strip() for ticker in ticker_input.split(',') if ticker.strip()]
@@ -1052,7 +1049,7 @@ def main():
         period = st.selectbox(
             "Select Time Period:",
             options=["1mo", "3mo", "6mo", "1y", "2y", "5y", "max"],
-            index=3  # Default to 1y
+            index=0  # Default to 1y
         )
         
         # Data source selection
