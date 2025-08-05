@@ -5,7 +5,8 @@ FROM python:3.9-slim
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONPATH=/app
 
 # Set working directory
 WORKDIR /app
@@ -37,6 +38,9 @@ RUN mkdir -p /app/data /app/cache /app/logs /app/static && \
 # Download NLTK data
 RUN python -c "import nltk; nltk.download('punkt'); nltk.download('vader_lexicon')"
 
+# Make the entry point script executable
+RUN chmod +x /app/run_app.py
+
 # Switch to non-root user
 USER stoxchai
 
@@ -53,5 +57,5 @@ ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_ENABLE_CORS=false
 ENV STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=true
 
-# Run the application
-CMD ["streamlit", "run", "src/ui/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run the application using the new entry point
+CMD ["python", "run_app.py"]

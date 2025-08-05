@@ -1,0 +1,96 @@
+# Simplified Podman Compose for StoxChai (No Nginx/Monitoring)
+version: '3.8'
+
+services:
+  # Main StoxChai Application
+  stoxchai-app:
+    build: .
+    container_name: stoxchai-app
+    ports:
+      - "8501:8501"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - PYTHONPATH=/app
+    volumes:
+      - ./data:/app/data:Z
+      - ./logs:/app/logs:Z
+      - ./cache:/app/cache:Z
+    networks:
+      - stoxchai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: stoxchai-postgres
+    environment:
+      - POSTGRES_DB=stoxchai
+      - POSTGRES_USER=stoxchai
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:Z
+      - ./deployment/init.sql:/docker-entrypoint-initdb.d/init.sql:Z
+    ports:
+      - "5432:5432"
+    networks:
+      - stoxchai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stoxchai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: stoxchai-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-changeme}
+    volumes:
+      - redis_data:/data:Z
+    ports:
+      - "6379:6379"
+    networks:
+      - stoxchai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Ollama AI Service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: stoxchai-ollama
+    volumes:
+      - ollama_data:/root/.ollama:Z
+    ports:
+      - "11434:11434"
+    networks:
+      - stoxchai-network
+    restart: unless-stopped
+    environment:
+      - OLLAMA_ORIGINS=*
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  postgres_data:
+  redis_data:
+  ollama_data:
+
+networks:
+  stoxchai-network:
+    driver: bridge 

@@ -16,17 +16,15 @@ from src.data.indian_market import indian_market, indian_news
 from src.core.models import StockValidator
 from src.ui.components import create_sidebar, create_header, create_footer, IndianMarketDashboard
 
+# Configure Streamlit page at module level (must be first Streamlit command)
+st.set_page_config(**settings.STREAMLIT_CONFIG)
+
 class StoxChaiApp:
     """Main Streamlit application class"""
     
     def __init__(self):
-        self.setup_page_config()
         self.load_custom_css()
         self.initialize_session_state()
-        
-    def setup_page_config(self):
-        """Configure Streamlit page"""
-        st.set_page_config(**settings.STREAMLIT_CONFIG)
         
     def load_custom_css(self):
         """Load custom CSS for Indian market theme"""
